@@ -57,7 +57,6 @@ def input_image_setup(image_loc):
     except Exception as e:
         raise e  # Re-raise the exception for handling in generate_gemini_response
 
-
 def generate_gemini_response(input_prompt, image_loc):
     try:
         image_parts = input_image_setup(image_loc)  # Assuming input_image_setup returns a list of image data dictionaries
@@ -80,14 +79,19 @@ def upload_file():
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
 
+    # Extracting additional input
+    last_glucometer_reading = request.form.get('lastglucometerreading', 'N/A')
+
     file_path = 'photo/' + file.filename
     try:
         file.save(file_path)
     except Exception as e:
         return jsonify({'error': f'Failed to save file: {e}'}), 500
 
-    input_prompt = """
+    input_prompt = f"""
         As an expert specializing in assessing the suitability of fruits and foods for individuals with diabetes, your task involves analyzing input images featuring various food items. Your first objective is to identify the type of fruit or food present in the image. Subsequently, you must determine the glycemic index of the identified item. Based on this glycemic index, provide recommendations on whether individuals with diabetes can include the detected food in their diet. If the food is deemed suitable, specify the recommended quantity for consumption.
+
+        Last Glucometer Reading: {last_glucometer_reading}
     """
     try:
         response = generate_gemini_response(input_prompt, file_path)
@@ -95,7 +99,6 @@ def upload_file():
         return jsonify({'error': f'Failed to generate response: {e}'}), 500
 
     return jsonify({'file_path': file_path, 'response': response}), 200
-
 
 if __name__ == '__main__':
     app.run(debug=True)
