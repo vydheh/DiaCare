@@ -89,7 +89,13 @@ def upload_file():
         return jsonify({'error': f'Failed to save file: {e}'}), 500
 
     input_prompt = f"""
-       As an expert specializing in assessing the suitability of fruits and foods for individuals with diabetes, your task involves analyzing input images featuring various food items. Your first objective is to identify the type of fruit or food present in the image. Subsequently, you must determine the glycemic index of the identified item. Based on this glycemic index and the individual's last glucometer reading of {last_glucometer_reading}, provide recommendations on whether individuals with diabetes can include the detected food in their diet. If the food is deemed suitable, specify the recommended quantity for consumption.
+      As an expert specializing in assessing the suitability of fruits and foods for individuals with diabetes, your task involves analyzing input images featuring various food items. Your first objective is to identify the type of fruit or food present in the image. Subsequently, you must determine the glycemic index of the identified item. Based on this glycemic index and the individual's last glucometer reading of 150mg/dl  provide recommendations on whether individuals with diabetes can include the detected food in their diet. If the food is deemed suitable, specify the recommended quantity for consumption.
+Your answer should be in the given format :- 
+1) Food name 
+2) Glycemic Index
+3) Based on previous reading  can they have it or not 
+Stick strictly to these 3 points no other content other than these three points.
+Also if an Image is not of a food then just say Please enter an image of food
     """
     try:
         response = generate_gemini_response(input_prompt, file_path)
