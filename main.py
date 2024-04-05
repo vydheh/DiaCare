@@ -4,7 +4,7 @@ from google.cloud import generativeai
 
 app = Flask(__name__)
 
-generativeai.configure(api_key='YOUR_API_KEY')
+generativeai.configure(api_key='AIzaSyCyBk7JDaoLq32uLgJqmWZsAfpnW_bm2nY')
 
 model = generativeai.GenerativeModel(model_name="gemini-pro-vision")
 
