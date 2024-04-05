@@ -58,7 +58,7 @@ def upload_file():
         return jsonify({'error': f'Failed to save file: {e}'}), 500
 
     input_prompt = f"""
-    You have an image containing a list of categories, and you also have a parameter containing some input. Your task is to classify the input based on the categories in the image and return the result. Expense: {expense}
+    You have an image containing a list of categories, and you also have a parameter Expense: {expense} input. Your task is to classify the input based on the categories in the image and return the result. 
     """
     try:
         response = generate_gemini_response(input_prompt, file_path)
