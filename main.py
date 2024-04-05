@@ -80,7 +80,7 @@ def upload_file():
         return jsonify({'error': 'No selected file'}), 400
 
     # Extracting additional input
-    last_glucometer_reading = request.form.get('lastglucometerreading', 'N/A')
+    last_glucometer_reading = request.form.get('expense', 'N/A')
 
     file_path = 'photo/' + file.filename
     try:
@@ -89,7 +89,7 @@ def upload_file():
         return jsonify({'error': f'Failed to save file: {e}'}), 500
 
     input_prompt = f"""
-    you have an image containing a list of categories, and you also have a parameter containing some input. Your task is to classify the input based on the categories in the image and return the result.
+    you have an image containing a list of categories, and you also have a parameter expense Expense: {expense} containing some input. Your task is to classify the input based on the categories in the image and return the result.
     """
     try:
         response = generate_gemini_response(input_prompt, file_path)
